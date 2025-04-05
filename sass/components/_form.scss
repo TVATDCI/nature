@@ -1,0 +1,114 @@
+.form {
+    &__group {
+        margin: 0.5rem;
+    }
+
+    &__input {
+        font-size: 1.5rem;
+        font-family: inherit; // Lato
+        color: inherit; // font-family does not inherit the font color. So you also have to apply it again below!
+        padding: 1rem 2rem;
+        border-radius: 2px;
+        background-color: rgba($color-white, .5);
+        border: none;
+        border-bottom: 3px solid transparent;
+        width: 90%;
+        display: block;
+        transition: all .5s;
+
+        @include respond(tab-port) {
+            width: 90%;
+        }
+
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba($color-black, .3);
+            border-bottom: 5px solid $color-primary-light;
+        }
+        &:focus:invalid {
+            border-bottom: 5px solid $color-orange-dark;
+        }
+
+        &::-webkit-input-placeholder {
+            color: $color-grey-light-3;
+        }
+    
+    }
+
+    &__label {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-left: 0.5rem;
+        margin-top: 0.7rem;
+        display: block;
+        transition: all .3s;
+
+    }
+    //This techning is used only to hide the letter shown with the place holder and call it back when the input box is in used! 
+
+    //input&label are the sibling of form__group. In this case you want to select only a direct sibling after input. So you can use adjacent sibling selector to do the job in css! check the format written in html
+    &__input:placeholder-shown + &__label {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4rem);
+    }
+
+    &__radio-group {
+        width: 50%; // they stay as col at 50% but if you chage to 49% they will display holizontal 50-50?
+        display: inline-block;
+        margin-top: 1rem;
+
+        @include respond(tab-port) {
+            width: 90%;
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__radio-input {
+        display: none;
+    }
+
+    &__radio-label {
+        font-size: $default-font-size;
+        cursor: pointer;
+        position: relative;
+        padding-left: 4.5rem;
+    }
+
+    &__radio-button {
+        height: 3rem;
+        width: 3rem;
+        border: 5px solid $color-primary-light;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: -.4rem;
+        &::after {
+            content: "";
+            display: block;
+            height: 1.3rem;
+            width: 1.3rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: $color-primary;
+            opacity: 0;
+            transition: opacity .2s;
+            
+        }
+    }
+    &__radio-input:checked ~ &__radio-label &__radio-button::after {
+        opacity: 1;
+    }
+
+    &__btn {
+       width:50%;
+       margin-top: 2rem;
+    }
+
+   
+}

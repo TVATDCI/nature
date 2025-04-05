@@ -1,0 +1,67 @@
+.header {
+    height: 95vh;
+    background-image: linear-gradient(to left bottom,
+    rgba($color-gold-dark, 0.7),
+    rgba($color-grey-dark, 0.2),
+    rgba($color-black, 0)),
+    url(../img/hero-small.jpg);
+
+    background-size: cover;
+    background-position: top;
+    position: relative;
+
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 80vh, 0 100%);
+    //In the year this course is done, clip-path was still not supported on old firefox. Then you have to add @support into the code. But firefox supports clip-path (today 2024). So im not going to add more work to this!
+
+    //using media query with dpi to re-scale img res. The change of background color is to see the differences! also added -webkit-min-width-pixel-ratio for safari!
+    @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+           (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em), (min-width: 125em) { // 1em = 16px
+    background-image: linear-gradient(to left bottom,
+    rgba($color-primary, 0.7),
+    rgba($color-primary-light, 0.2),
+    rgba($color-black, 0)),
+    url(../img/hero.jpg);
+    }
+
+    /*@media (min-width: 2000px) { since the set of property is the same, in order to use less code, the media query below can be moved to the set above by using a comma , as or,
+    
+        background-image: linear-gradient(to left bottom,
+    rgba($color-primary, 0.7),
+    rgba($color-primary-light, 0.2),
+    rgba($color-black, 0)),
+    url(../img/hero.jpg);
+    }*/
+
+    @include respond(phone) {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 90vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 90vh, 0 100%); width: 100%;
+    }
+
+    &_logo-box {
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+        align-content:center;
+
+        @include respond(tab-port) {
+            position: relative;
+            top: 4rem;
+            left: 6rem;
+        }
+    }
+
+    &_logo {
+        height: 3.5rem;
+    
+        animation: moveInLeft 5s ease-out;
+    }
+    
+    &_text-box {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+}

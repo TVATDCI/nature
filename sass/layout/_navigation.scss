@@ -1,0 +1,172 @@
+.navigation {
+    &__checkbox {
+        display: none;
+    }
+
+    &__button {
+        background-image: radial-gradient($color-gold-light, $color-gold-dark);
+        height: 7rem;
+        width: 7rem;
+        position: fixed;
+        top: 6rem;
+        right: 8rem;
+        border-radius: 50%;
+        z-index: 1000;
+        box-shadow: 0 1rem 3rem rgba($color-black, .3);
+        //text-align: center is to position the 3 tripes icon into the button. Because it is icon which is made up inside the button. after this goes back to the icon and adjust the magin to move the stripes down a little bit
+        text-align: center;
+        cursor: pointer;
+
+        @include respond(tab-port) {
+            top: 4rem;
+            right: 6rem;
+        }
+
+        @include respond(phone) {
+            top: 3rem;
+            right: 6rem;
+        }
+    }
+
+    &__background {
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6.5rem;
+        right: 8rem;
+        background-image: radial-gradient($color-gold-light, $color-orange-light,$color-gold-dark);
+
+        z-index: 500;
+        transition: all .8s cubic-bezier(0.5, 1, 0.89, 1);
+        // adjustable-cubic-bezier @easings.net added to control the transition of the background
+
+        //transform: scale(80); use this to go into the nav-list and links
+
+        @include respond(tab-port) {
+            top: 4rem;
+            right: 6rem;
+        }
+
+        @include respond(phone) {
+            top: 3rem;
+            right: 6rem;
+        }
+    }
+
+    &__nav {
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 501; //using opacity and width 0 to hide the nav in the BG
+        opacity: 0;
+        width: 0;
+        transition: all .8s cubic-bezier(0.34, 0.265, 0.265, 1.88);
+
+    }
+
+    &__list {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        list-style: none;
+        text-align: center;
+
+        width: 100%;
+    }
+
+    &__item {
+        margin: 1rem;
+    }
+
+    &__link {
+        &:link,
+        &:visited {
+            display: inline-block;
+            font-size: 3rem;
+            font-weight: 400;
+            padding: 1rem 2rem;
+            color: $color-white;
+            text-decoration: none;
+            text-transform: uppercase;
+            // the trick is to blow the background-transparent to 200% and let the gold color rolls at point 0-50% back to 100% with transition!
+            background-image: linear-gradient(120deg, transparent 0%, transparent 0%, transparent 50%, $color-gold-dark 50%);
+            background-size: 220%;
+            transition: all .4s;
+
+            // breaking the rules by putting span very inside the block!
+            span {
+                margin-right: 1rem;
+                display: inline-block;
+                font-weight: 400;
+            }
+        }
+
+        &:hover,
+        &:active {
+           background-position: 100%;
+           transform: translateX(4rem);
+           color: $color-grey-light-2;
+        }
+    }
+
+    //checkbox functionality
+
+    &__checkbox:checked ~ &__background {
+        transform: scale(80);
+    }
+
+    &__checkbox:checked ~ &__nav {
+        opacity: 1;
+        width: 100%;
+    }
+
+    //ICON is positioned inside the button
+    &__icon {
+        position: relative;
+        margin-top: 3.3rem;
+
+        &,
+        &::before,
+        &::after {
+            width: 3rem;
+            height: 2px;
+            background-color: $color-white;
+            display: inline-block;
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            //you can do all above with transform too. However, look below>> do not forget transition for the icon!
+            transition: all .6s;
+        }
+        &::before { top: -.8rem; }
+        &::after { top: .8rem; }
+    }
+
+    //icon is the child of button. so you can select it direct when the the button is hoverd. below
+    &__button:hover &__icon::before { top: -1.1rem;}
+    &__button:hover &__icon::after {top: 1.1rem;}
+
+    //make the cross for icon is go to checkbox. here is how. when the checkbox is checked>>button>>__icon>>select what you want!
+    &__checkbox:checked + &__button &__icon {
+        background-color: transparent;
+    }
+
+    //then is what you want to happen when the icon is clicked?
+    &__checkbox:checked + &__button &__icon::before {
+        top: 0;
+        transform: rotate(315deg);
+    }
+    //the rotation formala is whatever, the degreee you want them to rotate. they shold come back to however you want. in this case is 45deg cross = 360deg-45deg
+    //then happens after?
+    &__checkbox:checked + &__button &__icon::after {
+        top: 0;
+        transform: rotate(-315deg);
+    }
+}

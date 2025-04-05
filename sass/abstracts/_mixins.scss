@@ -1,0 +1,57 @@
+@mixin clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+//MEDIA QUERY MANAGER
+/*
+0px - 600px : Phone
+600px - 900px : Tablet Porrtrait
+900px - 1200px : Tablet landscape
+1200px - 1800px : is where normal styles apply
+1800px + : BIG screen desktop
+*/
+
+//aftre adding the content as a value to mixin, then go back to the set up in base.scss
+/*@mixin responded-phone {
+    @media (max-width: 600px) { @content };}*/
+// there 3 examples 2 in here and 1 at base.scss. You can each mixin, like the one above, with the different size of the devices but look below is how to use the break point argument with @if directive as in js.script
+
+/*$breakpoint argument choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+Order; Base + typograph > general layout + grid > page layout.
+
+NOTE! In media query rem & em units will not get effected by font-size set up in html.(in this case is 10px = 62% of the standard web default) Beside em unit is prove to be the most affective when it comes to media query. So we use em here to set up instead of px or rem!
+1rem = 1em = 16px So the calc below is px divided by em
+*/
+
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 37.5em) { @content };  //600px
+    }
+    @if $breakpoint == tab-port {
+        @media only screen and (max-width: 56.25em) { @content };  //900px
+    }
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 75em) { @content };  //1200px
+    }
+    @if $breakpoint == big-desktop {
+        @media only screen and (min-width: 112.5em) { @content };  //1800px
+    } // dont forget to add the with @include in html section in base.scss
+
+    
+}

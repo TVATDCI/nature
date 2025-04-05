@@ -1,0 +1,104 @@
+.btn {
+    &,
+    &:link,
+    &:visited {
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: .5rem 3rem;
+        display: inline-block;
+        border-radius: 10rem;
+        transition: all .2s;
+        position: relative;
+        font-size: 1.5rem; // default size is 1.6rem. Btw. below is a little custom change for <button> element in the form section because you can put button strap inside form. It has to be element!
+        border: none;
+        cursor:pointer;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 1rem 2rem rgba($color-black,.3);
+
+        &::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
+    }
+
+    &:active {
+        transform: translateY(-1px);
+        box-shadow: 0 .5rem 1rem rgba($color-black,.7);
+    }
+
+    &--white {
+        background-color: $color-white;
+        color: $color-grey-dark;
+
+        &::after {
+            background-color: $color-white;
+       }
+    
+    }
+
+    &--green {
+        background-color: $color-primary-dark;
+        color: $color-white;
+
+        &::after {
+            background-color: $color-primary-light;
+       }
+    }
+     
+
+    &::after,
+    &::after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+    /*z-index is sued to declear a property of stacking contexts
+    below is to solve the layer on the same absolute spot
+    in this case 1 means it lays on top by 1 layer
+    putting -1 will put it on 1 layer below*/
+        z-index: -1;
+        transition: all .5s;
+    }
+
+
+    &--animated {
+        animation: moveInBottom 5s ease-in-out 2s, floatingFox 4s 2s ease-in-out infinite;
+        animation-fill-mode: backwards;
+    }
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+        font-size: $default-font-size;
+        color: $color-grey-dark;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid $color-gold-dark;
+        padding: 3px;
+
+    }
+
+    &:hover {
+        background-image: linear-gradient(to left, $color-gold-dark, rgba(rgb(95, 81, 14), 1));
+        //just an example of using linear-gradient as custom-color by bg-image instead of selecting solid color on bg-color
+        color: $color-white;
+        box-shadow: 0 1rem 2rem rgba($color-black,.2);
+        transform: translateY(-2px);
+        box-shadow: 0 1rem 2rem rgba($color-black,.3);
+    }
+
+    &:active {
+        transform: translateY(1px);
+        box-shadow: 0 .5rem 1rem rgba($color-black,.8);
+    }
+
+}
+

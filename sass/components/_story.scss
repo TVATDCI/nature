@@ -1,0 +1,83 @@
+.story {
+    width: 75%;
+    margin: 0 auto;
+    box-shadow: 0 3rem 6rem rgba($color-black, .2);
+    background-color: $color-white;
+    border-radius: 0.3rem;
+    padding: 6rem;
+    padding-left: 9rem;
+    font-size: $default-font-size;
+
+    transform: skewX(-12deg);
+    // using transform above will only apply to the story box. but not the shape. because there is already a transform used there. you can apply them at the same time. So you have to add it back manually at both shape and extra in text!
+    @include respond(tab-port) {
+        width: 100%;
+        padding: 4rem;
+    padding-left: 6rem;
+    }
+
+    @include respond(phone) {
+        transform: skewX(0);
+    }
+    
+
+    &__shape {
+        width: 15rem;
+        height: 15rem;
+        float: left;
+        -webkit-shape-outside: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%);
+        // -webkit-shape-outside is use to blend the text outside the float object, which is also used the same set of calculation but with clip-path circle
+        -webkit-clip-path: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%);
+        transform: translateX(-3rem) skewX(12deg);
+        position: relative;
+
+        @include respond(phone) {
+            transform: translateX(-3rem) skewY(0);
+        }
+    }
+
+    &__img {
+        // the img heigh is 100% of the parent, in this case the story__shape height = 15rem. it could also be width!
+        height: 100%;
+
+        //transform: translateX(-4rem) scale(1.4); In the course, you can apply transform:translateX 4rem to the left. but i like the perspective as it is now
+    }
+
+    &__text {
+        transform: skewX(12deg);
+
+        @include respond(phone) {
+            transform: skewY(0);
+        }
+    }
+
+    &__caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 20%);
+        color: $color-white;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        text-align: center;
+        opacity: 0;
+        transition: all .5s;
+
+        backface-visibility: hidden;
+        // the text shakes at the end. So bf-visibility is applied again!
+    }
+
+    &:hover &__caption {
+        opacity: 1;
+        //in 2024 you can add opacity throug filter: opacity too!
+        transform: translate(-50%, -50%);
+    }
+
+    &:hover &__img {
+        //transform: scale(1);
+        filter: blur(5px) brightness(75%);
+    }
+
+}

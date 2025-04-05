@@ -1,0 +1,196 @@
+.card {
+    //Functionality for the cards
+    perspective: 150rem;
+    position: relative;
+    height: 52rem;
+
+    &__side {
+        height: 52rem;
+        transition: all .8s ease;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        border-radius: 3px;
+        overflow: hidden; // being used to fix the over lapping of picture border. so that it goes back to radius!
+        box-shadow: 0 1.5rem 4rem rgba($color-black, .15);
+        //since there are many box shadows you can also add variable to box shadow 1--2-3 
+        backface-visibility: hidden;
+        
+        &--front {
+            background-color: $color-grey-light-1;
+        }
+
+        &--back {
+            transform: rotateY(180deg);
+
+            //.card__side--back-1
+            &-1 {
+                background-image: linear-gradient(to right bottom, $color-orange-light, $color-orange-dark);
+            }
+
+            &-2 {
+                background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
+            }
+
+            &-3 {
+                background-image: linear-gradient(to right bottom, $color-blue-light, $color-blue);
+            }
+        }
+    }
+
+    //.card:hover .card__side {}
+    &:hover &__side--front {
+        transform: rotateY(-180deg);
+    }
+
+    &:hover &__side--back {
+        transform: rotateY(0deg);
+    }
+
+    //Card's front side styling
+    &__picture {
+        background-size: cover;
+        height: 23rem;
+        background-blend-mode:color; //being used to blend the bg-image into the card
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 83%, 0 100%);
+        //webkit is to mahe sure that the added fit in all.well, maybe we don't need it anymore in 2024!
+        clip-path: polygon(0 0, 100% 0, 100% 83%, 0 100%);
+        &--1 {
+            background-image: linear-gradient(to right bottom, $color-orange-light, $color-orange-dark), url(/starter/img/nat-5.jpg);
+        }
+
+        &--2 {
+            background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark), url(/starter/img/nat-6.jpg);
+        }
+
+        &--3 {
+            background-image: linear-gradient(to right bottom, $color-blue-light, $color-blue), url(/starter/img/nat-7.jpg);
+        }
+    }
+    &__heading {
+        font-size: 2.8rem;
+        font-weight: 350;
+        text-transform: uppercase;
+        text-align: right;
+        color: $color-white;
+        position: absolute;
+        top: 15rem;
+        right: 0;
+        width: 75%;
+
+    }
+    // the reason for not nesting heading-span in the heading is that it 's not really a child or modifild of the heading in the B.E.M. It is better new selector for this function.
+    &__heading-span {
+        //padding: .5rem .5rem;
+        // after adding the padding the sentence broke in 2. by using box-decoration-break: clone. it should bring it back together. But, it did not work! I will find the way..
+        //-webkit-box-direction-break: clone;
+        //box-decoration-break: clone;
+
+        
+        &--1 {
+            background-image: linear-gradient(to left bottom, rgba($color-orange-light, .85), rgba($color-orange-dark, 1));
+        }
+
+        &--2 {
+            background-image: linear-gradient(to left bottom, rgba($color-primary-light, .85), rgba($color-primary-dark, 1));
+        }
+
+        &--3 {
+            background-image: linear-gradient(to left bottom, rgba($color-blue-light, .85), rgba($color-blue, 1));
+        }
+    }
+    
+    &__details {
+            padding: 1rem 3rem;
+
+        ul {
+            list-style: none;
+            width: 80%;
+            margin: 0 auto;
+            
+            li {
+                text-align: center;
+                font-size: 1.5rem;
+                padding: 1rem;
+                
+
+                &:not(:last-child) {
+                    border-bottom: 1px solid $color-grey-light-2;
+                }
+            }
+        }
+    }
+
+    //Card's back side styling
+    &__cta {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        text-align: center;
+    }
+
+    &__price-box {
+        text-align: center;
+        color: $color-white;
+        margin-bottom: 8rem;
+    }
+
+    &__price-only {
+        font-size: 1.4rem;
+        text-transform: uppercase;
+
+    }
+
+    &__price-value {
+        font-size: 6rem;
+        font-weight: 100;
+    }
+
+    @include respond(tab-port) {
+        height: auto;
+        border-radius: 3px;
+        background-color: $color-white;
+        box-shadow: 0 1.5rem 4rem rgba($color-black, .15);
+
+        &__side {
+            height: auto;
+            transition: all .8s ease;
+            position: relative;
+            box-shadow: none;
+           
+    
+            &--back {
+                transform: rotateY(0);
+                clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+    
+        //.card:hover .card__side {}
+        &:hover &__side--front {
+            transform: rotateY(0);
+        }
+    
+        //Card's front side styling is deleted. Itstays the same
+        
+        //Card's back side styling
+        &__cta {
+            position: relative;
+            top: 0;
+            left: 0;
+            transform: translate(0);
+            width: 100%;
+            padding: 7rem 4rem 4rem 4rem;
+        }
+    
+        &__price-box {
+            margin-bottom: 3rem;
+        }
+    
+        &__price-value {
+            font-size: 4rem;
+        }
+    }
+}   

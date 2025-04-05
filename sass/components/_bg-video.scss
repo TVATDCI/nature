@@ -1,0 +1,19 @@
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    filter:opacity(.2);
+
+    // to clip the over flow from the bg
+    overflow: hidden;
+
+    // to make sure that the video fits properly to the parent. You need to set height and width + object-fit: cover aka bg-size: cover to the video content
+    &__content {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
