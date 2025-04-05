@@ -75,10 +75,6 @@ sass/
 └── components/
 ```
 
-````
-
----
-
 ## 🛠️ Build Process
 
 The project uses a manual CSS toolchain (before I learned Webpack/Vite or Tailwind):
@@ -86,14 +82,12 @@ The project uses a manual CSS toolchain (before I learned Webpack/Vite or Tailwi
 ```bash
 npm install        # Install all dev dependencies
 npm run build:css  # Compile SCSS, concat, autoprefix, compress
-````
-
----
+```
 
 ## 📜 License & Credits
 
 Built by **Tuanthong Vaidyanond**  
-For Udemy **Advanced CSS & Sass** online course with Jonas Schmedtmann.
+For Udemy **Advanced CSS & Sass** online course with Jonas Schmedtmann. Feb 2024
 
 © Copyright by Jonas Schmedtmann.  
 You are 100% allowed to use this webpage for both personal and commercial use, but NOT to claim it as your own design.  
