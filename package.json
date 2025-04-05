@@ -11,7 +11,7 @@
     "compress:css": "node-sass starter/css/style.prefix.css output-style compressed",
     "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css"
   },
-  "author": "\"TNTHGVDYNND\"",
+  "author": "Tuanthong Vaidyanond (TVATDCI)",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.4.18",
