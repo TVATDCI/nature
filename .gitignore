@@ -1,10 +1,6 @@
 # dependencies
 node_modules/
 
-# production
-dist/
-starter/css/*.css
-starter/css/*.css.map
 
 # misc
 .DS_Store

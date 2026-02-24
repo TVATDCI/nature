@@ -1,16 +1,18 @@
+@use '../abstracts' as *;
+
 *,
 *::after,
 *::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
 }
 
 html {
-    // html is left here to def 1rem=10px=62.5% of 16px=100% is set on this page!
-    font-size: 62.5%; //with 62.5% > 1 rem = 10px 10px of 16px(100%) is 10px/16px = 62.5%
+  // html is left here to def 1rem=10px=62.5% of 16px=100% is set on this page!
+  font-size: 62.5%; //with 62.5% > 1 rem = 10px 10px of 16px(100%) is 10px/16px = 62.5%
 
-    /*the normal way of writing media query
+  /*the normal way of writing media query
     @media (max-width) {
         fon-size: bla bla;
         and the rest of the world.
@@ -18,39 +20,41 @@ html {
         @include
     */
 
-    //below are those with the set @if directive $breakpoint argument in mixin
+  //below are those with the set @if directive $breakpoint argument in mixin
 
-    // For Desktop irst, in order to avoid the conflict when both screen are less than 900px. The default is that the second one will be applied.So >> the set up is the larger before the small one! When there is a conflict the second one will be applied!!! But with mobile first then it would be smallest to the biggest number.
+  // For Desktop irst, in order to avoid the conflict when both screen are less than 900px. The default is that the second one will be applied.So >> the set up is the larger before the small one! When there is a conflict the second one will be applied!!! But with mobile first then it would be smallest to the biggest number.
 
-    @include respond(tab-land) { // width less than 900
-        font-size: 56.25%; //1rem = 9px, 9/16 = 56.25% 
-    }
-    //to set a scale to the responsive is to set out the px per 1 rem by your formula and use the same calc which is (number)px divied by 16px = % of the size.
-    
-    @include respond(tab-port) { //width less than 600
-        font-size: 50%; //1rem = 8px, 8/16 = 50%
-    }
+  @include respond(tab-land) {
+    // width less than 900
+    font-size: 56.25%; //1rem = 9px, 9/16 = 56.25%
+  }
+  //to set a scale to the responsive is to set out the px per 1 rem by your formula and use the same calc which is (number)px divied by 16px = % of the size.
 
-    @include respond(phone) {//width 0-600
-        font-size: 37.5%; //1rem = 6px, 6/16 = 37.5%
-    }
+  @include respond(tab-port) {
+    //width less than 600
+    font-size: 50%; //1rem = 8px, 8/16 = 50%
+  }
 
-    @include respond(big-desktop) {
-        font-size: 75%; //1rem = 12, 12/16 = 75%
-    }
+  @include respond(phone) {
+    //width 0-600
+    font-size: 37.5%; //1rem = 6px, 6/16 = 37.5%
+  }
 
+  @include respond(big-desktop) {
+    font-size: 75%; //1rem = 12, 12/16 = 75%
+  }
 }
 
 body {
-    box-sizing: border-box;
-    padding: 3rem;
+  box-sizing: border-box;
+  padding: 3rem;
 
-    @include respond(tab-port) {
-        padding: 0;
-    }
+  @include respond(tab-port) {
+    padding: 0;
+  }
 }
 // using pseudo selector to selec your own selection of a select your own style of background and font color when you outline letters on the web page!!!
 ::selection {
-    background-color: $color-gold-dark;
-    color: $color-white;
+  background-color: $color-gold-dark;
+  color: $color-white;
 }

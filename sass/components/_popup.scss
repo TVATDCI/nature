@@ -1,137 +1,137 @@
+@use '../abstracts' as *;
+
 .popup {
-    height: 100vh;
+  height: 100vh;
+  width: 100%;
+  position: fixed; // to keep the whole page still!
+  top: 0;
+  left: 0; // the top and left value are used for positioning the page instead of position, which is already being used to fix the popup!
+  background-color: rgba($color-black, 0.3);
+  z-index: 5000;
+  backdrop-filter: blur(10px);
+  //In the year this course is done, backdrop-filter was still not supported on old firefox and android. Then you have to add @support (-webkit-backdrop-filter: blur()); into the code. But firefox supports clip-path (today 2024). So im not going to add more work to this!
+  opacity: 0; // to hide the popup!
+  visibility: hidden;
+
+  transition: all 0.3s; //and again dont forget to set the transition!
+
+  //The whole content in this popup can be done with flex-box or grid in 2024. In this case is just a learning technic table cells by faking it with display property ;)
+
+  &__content {
+    @include absCenter;
+
+    width: 75%;
+    background-color: $color-white;
+    box-shadow: 0 2rem 4rem rgba($color-black, 0.8);
+    border-radius: 3px;
+    display: table;
+    overflow: hidden;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.25);
+    transition: all 0.4s 0.2s; // the last .2s is a delay to the transition
+
+    @include respond(tab-land) {
+      width: 90%;
+      padding: 10rem 0 0 5rem;
+      background-color: rgba($color-orange-light, 0.5);
+      overflow: hidden;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.25);
+      transition: all 0.4s 0.2s;
+    }
+
+    @include respond(tab-port) {
+      width: 90%;
+      padding: 10rem 0 0 5rem;
+      background-color: rgba($color-primary-light, 0.5);
+      overflow: hidden;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.25);
+      transition: all 0.4s 0.2s;
+    }
+  }
+
+  &__left {
+    width: 33.333333%;
+    display: table-cell;
+    // you can also use floating left. this whole idea is to play with table cells!
+    @include respond(tab-land) {
+      width: 33.333333%;
+      display: table-cell;
+    }
+
+    @include respond(tab-port) {
+      width: 33.333333%;
+      display: table-cell;
+    }
+  }
+
+  &__right {
+    width: 66.6666667%;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 1.5rem 6rem;
+
+    @include respond(tab-land) {
+      width: 66.6666667%;
+      display: table-cell;
+      vertical-align: middle;
+      padding: 2rem 4rem;
+    }
+
+    @include respond(tab-port) {
+      width: 66.6666667%;
+      display: table-cell;
+      vertical-align: middle;
+      padding: 2rem 4rem;
+    }
+  }
+
+  &__img {
+    display: block;
     width: 100%;
-    position: fixed; // to keep the whole page still!
-    top: 0;
-    left: 0; // the top and left value are used for positioning the page instead of position, which is already being used to fix the popup!
-    background-color: rgba($color-black, .3);
-    z-index: 5000;
-    backdrop-filter: blur(10px);
-     //In the year this course is done, backdrop-filter was still not supported on old firefox and android. Then you have to add @support (-webkit-backdrop-filter: blur()); into the code. But firefox supports clip-path (today 2024). So im not going to add more work to this!
-    opacity: 0; // to hide the popup!
-    visibility: hidden;
+  }
 
-    transition: all .3s; //and again dont forget to set the transition!
+  &__text {
+    font-size: 1.4rem;
+    margin-bottom: 4rem;
 
-    //The whole content in this popup can be done with flex-box or grid in 2024. In this case is just a learning technic table cells by faking it with display property ;)
+    //column fuction for some texts layout!
+    column-count: 2; // <-- you can increase colums with the number!
+    column-gap: 6rem; // 1em is always the font-size of the current element. in this case = 14px or 1.4rem above!
+    column-rule: 1px solid $color-grey-light;
 
-    &__content {
-        @include absCenter;
+    -webkit-hyphens: auto;
+    hyphens: auto; // auto set just for some old school print look!
+  }
 
-        width: 75%;
-        background-color: $color-white;
-        box-shadow: 0 2rem 4rem rgba($color-black, .8);
-        border-radius: 3px;
-        display: table;
-        overflow: hidden;
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.25);
-        transition: all .4s .2s; // the last .2s is a delay to the transition
+  // Popup open states!
+  &:target {
+    opacity: 1; // target to call the popup! But dont forget to set the # on to the link where you want it to go as well!
+    visibility: visible;
+  }
 
-        @include respond(tab-land) {
-            width: 90%;
-            padding: 10rem 0 0 5rem;
-            background-color: rgba($color-orange-light, 0.5);
-            overflow: hidden;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(.25);
-        transition: all .4s .2s;
-        }
+  &:target &__content {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 
-        @include respond(tab-port) {
-            width: 90%;
-            padding: 10rem 0 0 5rem;
-            background-color: rgba($color-primary-light, 0.5);
-            overflow: hidden;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(.25);
-            transition: all .4s .2s;
-        }
-    } 
-
-    &__left {
-        width: 33.333333%;
-        display: table-cell;
-        // you can also use floating left. this whole idea is to play with table cells!
-        @include respond(tab-land) {
-            width: 33.333333%;
-            display: table-cell;
-        }
-
-        @include respond(tab-port) {
-            width: 33.333333%;
-            display: table-cell;
-        }
+  &__close {
+    &:link,
+    &:visited {
+      color: $color-grey-dark;
+      position: absolute;
+      top: 2.5rem;
+      right: 6rem;
+      font-size: 3rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+      line-height: 1;
     }
 
-    &__right {
-        width: 66.6666667%;
-        display: table-cell;
-        vertical-align: middle;
-        padding: 1.5rem 6rem;
-
-        @include respond(tab-land) {
-            width: 66.6666667%;
-            display: table-cell;
-            vertical-align: middle;
-            padding: 2rem 4rem;
-        }
-
-        @include respond(tab-port) {
-            width: 66.6666667%;
-            display: table-cell;
-            vertical-align: middle;
-            padding: 2rem 4rem;
-        }
+    &:hover {
+      color: $color-primary;
     }
-
-    &__img {
-        display: block;
-        width: 100%;
-    }
-
-    &__text {
-        font-size: 1.4rem;
-        margin-bottom: 4rem;
-
-        //column fuction for some texts layout!
-        column-count: 2; // <-- you can increase colums with the number!
-        column-gap: 6rem; // 1em is always the font-size of the current element. in this case = 14px or 1.4rem above!
-        column-rule: 1px solid $color-grey-light;
-
-        -webkit-hyphens: auto;
-        hyphens: auto; // auto set just for some old school print look!
-    }
-
-
-    // Popup open states!
-    &:target {
-        opacity: 1; // target to call the popup! But dont forget to set the # on to the link where you want it to go as well!
-        visibility: visible;
-    }
-    
-    &:target &__content {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    &__close {
-        &:link,
-        &:visited {
-            color: $color-grey-dark;
-            position: absolute;
-            top: 2.5rem;
-            right: 6rem;
-            font-size: 3rem;
-            text-decoration: none;
-            display: inline-block;
-            transition: all .2s;
-            line-height: 1;
-        }
-
-        &:hover {
-            color: $color-primary;
-        }
-    }
-
+  }
 }

@@ -8,7 +8,7 @@
     "prefix:css": "postcss css/style.css --use autoprefixer -o css/style.css",
     "watch:sass": "sass sass/main.scss css/style.css --watch --style=expanded",
     "build:css": "npm-run-all compile:sass prefix:css",
-    "deploy": "gh-pages -d .",
+    "deploy": "gh-pages -d . --src '{index.html,css/*.css,css/fonts/**,img/**}'",
     "format": "prettier --write ."
   },
   "author": "TNTHNGVDYNND",

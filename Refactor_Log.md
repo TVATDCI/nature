@@ -1,63 +1,67 @@
-# Refactor Log & Modern Deployment Guide
+# Refactor Log & Deployment Guide
 
-This document summarizes the tooling modernization and explains the new build and deployment workflow for the Trillo project.
+This document summarizes the tooling modernization and explains the build and deployment workflow for the **nature** project.
 
 ## 1. Summary of Changes
 
-The goal of this refactor was to replace deprecated and vulnerable tooling with a modern, secure, and robust build process while preserving the project's original source code.
+The goal was to replace deprecated and vulnerable tooling with a modern, secure build process while preserving the project's original source code, structure, and spirit — no dist folder, no framework rewrite.
 
-- **Dependency Overhaul**: Replaced `node-sass` (deprecated) with modern Dart `sass`. All dependencies were updated, and security vulnerabilities were fixed.
-- **Build Process**: A new build process was created. It now compiles all necessary files into a dedicated `dist` (distribution) folder, which is standard practice for web projects.
-- **Deployment Fix**: The deployment process was fixed. It now deploys only the contents of the `dist` folder to GitHub Pages, ensuring a clean and correct live site.
+- **Dependency Overhaul**: Replaced `node-sass` (deprecated) with modern Dart `sass`. All dependencies updated, security vulnerabilities fixed.
+- **Build Pipeline**: Sass compiles directly to `css/style.css`. PostCSS + autoprefixer runs in place on the same file. No intermediate output files, no dist folder.
+- **Deployment**: `gh-pages` deploys from the project root using a `--src` glob, pushing only `index.html`, `css/*.css`, `css/fonts/**`, and `img/**` to the `gh-pages` branch. Source files and tooling are never exposed.
 - **Code Quality**: Added `Prettier` for consistent code formatting, `.editorconfig` for editor consistency, and `.browserslistrc` to control browser support for `autoprefixer`.
-- **Gitignore**: The `.gitignore` file was updated to ignore the new `dist` folder and other build artifacts.
+- **Gitignore**: Updated to ignore `node_modules/` and other build artifacts. No dist folder — none is used.
 
-## 2. The New Build & Deploy Workflow
-
-New set of `npm` scripts in `package.json` to automate everything.
+## 2. The Build & Deploy Workflow
 
 ### Key Scripts
 
-- **`npm run build`**: This command prepares the project for deployment. It runs the following steps automatically:
-  1. `clean`: Deletes the old `dist` folder to ensure a fresh build.
-  2. `prepare:dist`: Creates a new, empty `dist` folder.
-  3. `copy:assets`: Copies `index.html` file and the entire `img` directory into the `dist` folder.
-  4. `build:css`: Compiles your Sass files (`sass/*.scss`), prefixes them for browser compatibility, and outputs the final `style.css` file into `dist/css/`.
+- **`npm run compile:sass`**: Compiles `sass/main.scss` → `css/style.css` (expanded output).
+- **`npm run prefix:css`**: Runs autoprefixer via PostCSS on `css/style.css` in place.
+- **`npm run build:css`**: Runs `compile:sass` then `prefix:css` in sequence. This is the full CSS build.
+- **`npm run watch:sass`**: Watches `sass/` and recompiles on every save. Use this during local development with Live Server.
+- **`npm run deploy`**: Pushes only the site's deliverable files to the `gh-pages` branch on GitHub using a `--src` glob. Does **not** push `sass/`, `node_modules/`, or any tooling config.
+- **`npm run format`**: Runs Prettier across the project for consistent formatting.
 
-- **`npm run deploy`**: This is the main command used to deploy to live site.
-  1. It automatically runs the entire `npm run build` process first.
-  2. It then takes the contents of the final `dist` folder and pushes them to the `gh-pages` branch on GitHub, which is what the live site uses.
+### Why No dist Folder
 
-- **`npm run watch:sass`**: Use this for local development. It watches over `.scss` files and compiles them into the `css/style.css` file whenever a change is made, which works perfectly with Live Server.
+This project deliberately avoids a dist build step. The HTML and images are authored directly in the root — there is nothing to copy or transform. Only the CSS needs a build step (Sass → autoprefixer), and the output goes straight to `css/style.css` where `index.html` already references it. The `gh-pages --src` glob handles clean deployment without any staging folder.
 
-## 3. How to Deploy the Project (The New Way)
-
-Here is the new step-by-step workflow.
+## 3. How to Work on the Project
 
 ### Step 1: Develop Locally
 
-- Run `npm run watch:sass` in the terminal.
-- Use "Live Server" in VS Code to see the changes in real-time as being edited in HTML and SCSS files.
+```bash
+npm run watch:sass
+```
+
+Open `index.html` with Live Server in VS Code. Changes to `.scss` files compile automatically and the browser reloads.
 
 ### Step 2: Deploy to GitHub Pages
 
-- When all is ready to publish the changes, stop the watcher and run a single command:
+When ready to publish:
 
-  ```bash
-  npm run deploy
-  ```
+```bash
+npm run build:css
+npm run deploy
+```
 
-- Wait a few minutes for GitHub Pages to update. The live site will now reflect the changes.
+`build:css` ensures the final compiled and prefixed CSS is up to date before pushing. `deploy` sends only the deliverable files to the `gh-pages` branch.
 
-### Step 3: Commit and Push Your Source Code
+Wait a few minutes for GitHub Pages to update. Live site: [https://tvatdci.github.io/nature/](https://tvatdci.github.io/nature/)
 
-- Deploying the site and saving the code are separate steps. After deploying, the implementation should always be committed and push the source code changes.
-- Add the changes, commit them with a message, and push to `main`.
+### Step 3: Commit and Push Source Code
 
-  ```bash
-  git add .
-  git commit -m "a descriptive commit message"
-  git push origin main
-  ```
+Deployment and source control are separate steps. After deploying, commit and push the source:
 
-This new process is robust, follows modern best practices, and keeps the source code clean while ensuring deployments are simple and reliable.
+```bash
+git add .
+git commit -m "a descriptive commit message"
+git push origin main
+```
+
+## 4. Project Philosophy
+
+This is a legacy preservation refactor — not a modernization. The original CSS architecture (BEM, hand-crafted layout, pre-grid mindset) is untouched. Only the tooling was updated to keep the project buildable and deployable without security vulnerabilities.
+
+Do not introduce frameworks, convert to Vite, or rebuild the architecture. This project is a time capsule.
