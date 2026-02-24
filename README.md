@@ -25,6 +25,7 @@ The project is deployed on GitHub Pages.
 🔗 [**Live Preview →**](https://tvatdci.github.io/nature/)
 
 **To deploy your changes:**
+
 1. Run `npm run build:css` to compile and prefix your CSS.
 2. Run `npm run deploy` to push the project to GitHub Pages.
 
@@ -94,7 +95,7 @@ npm run watch:sass  # Watch SCSS files for changes during development
 npm run format      # Format code using Prettier
 ```
 
-### Available npm scripts in package.json:
+### Available npm scripts in package.json
 
 ```json
 {
@@ -131,7 +132,7 @@ npm run format      # Format code using Prettier
 
 Built by **Tuanthong Vaidyanond**  
 For Udemy **Advanced CSS & Sass** online course with Jonas Schmedtmann. Feb 2026.  
-Tooling modernized by Gemini CLI.
+Updated new tolling 24.02.26
 
 © Copyright by Jonas Schmedtmann.  
 You are 100% allowed to use this webpage for both personal and commercial use, but NOT to claim it as your own design.  
