@@ -8,23 +8,25 @@ This project holds a special place in my learning experience — it’s the firs
 
 ## ✨ Project Highlights
 
-- ✅ Built with `SCSS`, compiled using `node-sass`
+- ✅ Built with `SCSS`, compiled using `sass` (Dart Sass)
 - ✅ Uses the **7-1 Sass pattern** (a.k.a. **7 Pirates 🏴‍☠️**) for modularity and maintainability
 - ✅ Follows **BEM naming conventions**
 - ✅ Structured with a clean, component-based folder hierarchy
 - ✅ Fully responsive layout with accessibility in mind
-- ✅ Uses `autoprefixer`, `postcss-cli`, and custom scripts
+- ✅ Uses `autoprefixer` through `postcss-cli` integrated into modern npm scripts
 - ✅ No frontend frameworks – just pure HTML & SCSS
 
 ---
 
 ## 🚀 Deployment
 
-- ✅ Deployed on GitHub Pages  
-  🔗 [**Live Preview →**](https://tvatdci.github.io/nature/)
+The project is deployed on GitHub Pages.
 
-- ✅ Project runs locally at `http://127.0.0.1`
-- 🛠️ I plan to **rebuild this project from scratch** using **React + Tailwind CSS** to demonstrate my progress after 1 year of full-stack development
+🔗 [**Live Preview →**](https://tvatdci.github.io/nature/)
+
+**To deploy your changes:**
+1. Run `npm run build:css` to compile and prefix your CSS.
+2. Run `npm run deploy` to push the project to GitHub Pages.
 
 ---
 
@@ -83,22 +85,29 @@ project-root/
 
 ### 🛠️ Build Process
 
-This project uses a basic SCSS compilation toolchain (without Webpack or Vite):
+This project uses a modern SCSS compilation toolchain (without Webpack or Vite), reflecting the tooling refactor:
 
 ```bash
 npm install         # Install dev dependencies
 npm run build:css   # Compile SCSS to CSS (with autoprefixing)
-npm run compress:css  # Optional: Minify and output to /output-style
+npm run watch:sass  # Watch SCSS files for changes during development
+npm run format      # Format code using Prettier
 ```
 
 ### Available npm scripts in package.json:
 
+```json
 {
-"scripts": {
-"build:css": "node-sass sass/main.scss css/style.css && postcss css/style.css -o css/style.css",
-"compress:css": "node-sass sass/main.scss output-style/style.css --output-style compressed"
+  "scripts": {
+    "compile:sass": "sass sass/main.scss css/style.css --style=expanded",
+    "prefix:css": "postcss css/style.css --use autoprefixer -o css/style.css",
+    "watch:sass": "sass sass/main.scss css/style.css --watch --style=expanded",
+    "build:css": "npm-run-all compile:sass prefix:css",
+    "deploy": "gh-pages -d .",
+    "format": "prettier --write ."
+  }
 }
-}
+```
 
 ---
 
@@ -114,14 +123,15 @@ npm run compress:css  # Optional: Minify and output to /output-style
 
 - Improving accessibility and interaction with pure HTML/CSS
 
-- Compiling SCSS manually using node-sass + postcss-cli
+- Compiling SCSS manually using modern `sass` + `postcss-cli`
 
 - Clean HTML5 markup and semantic structure
 
 ## 📜 License & Credits
 
 Built by **Tuanthong Vaidyanond**  
-For Udemy **Advanced CSS & Sass** online course with Jonas Schmedtmann. Feb 2024
+For Udemy **Advanced CSS & Sass** online course with Jonas Schmedtmann. Feb 2026.  
+Tooling modernized by Gemini CLI.
 
 © Copyright by Jonas Schmedtmann.  
 You are 100% allowed to use this webpage for both personal and commercial use, but NOT to claim it as your own design.  

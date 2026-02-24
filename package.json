@@ -4,23 +4,22 @@
   "description": "\"Landing page for nature\"",
   "main": "index.js",
   "scripts": {
-    "watch:sass": "node-sass sass/main.scss css/style.css -watch",
-    "compile:sass": "node-sass sass/main.scss css/style.comp.css",
-    "concat:css": "concat -o css/style.concat.css css/icon-font.css css/style.comp.css",
-    "prefix:css": "postcss --use autoprefixer -b 'last 5 version' css/style.css -o css/style.prefix.css",
-    "compress:css": "node-sass css/style.prefix.css output-style compressed",
-    "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css"
+    "compile:sass": "sass sass/main.scss css/style.css --style=expanded",
+    "prefix:css": "postcss css/style.css --use autoprefixer -o css/style.css",
+    "watch:sass": "sass sass/main.scss css/style.css --watch --style=expanded",
+    "build:css": "npm-run-all compile:sass prefix:css",
+    "deploy": "gh-pages -d .",
+    "format": "prettier --write ."
   },
   "author": "TNTHNGVDYNND",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.4.18",
-    "concat": "^1.0.3",
+    "gh-pages": "^6.3.0",
     "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.6",
     "postcss-cli": "^11.0.0",
-    "sass": "^1.86.3"
-  },
-  "dependencies": {
-    "node-sass": "^9.0.0"
+    "prettier": "^3.8.1",
+    "sass": "^1.97.3"
   }
 }
