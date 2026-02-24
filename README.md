@@ -47,6 +47,7 @@ project-root/
 │ └── ... 📸 All image assets (nat-_.jpg, logo-_, etc.)
 ├── sass/ 🎨 SCSS source files (modular & clean)
 │ ├── abstracts/ 📁 Sass helpers (no actual CSS output)
+│ │ ├── \_index.scss 📌 @forward entry point for all abstracts
 │ │ ├── \_functions.scss 🔧 Custom Sass functions
 │ │ ├── \_mixins.scss 🧩 Reusable mixins
 │ │ └── \_variables.scss 🎨 All design variables (colors, spacing, etc.)
@@ -70,12 +71,8 @@ project-root/
 │ │ ├── \_header.scss 🏔️ Hero/header section
 │ │ └── \_navigation.scss 🧭 Top navbar
 │ ├── pages/ 📁 Page-specific styles
-│ │ └── home.scss 🏡 Styles unique to home page
-│ ├── themes/ 📁 (Optional) for theme switching
-│ ├── vendors/ 📁 3rd-party libraries (optional)
-│ └── main.scss 🧠 The brain – imports everything!
-├── output-style/ ⚙️ Output from build scripts (optional)
-│ └── style.css (used only if `npm run compress:css`)
+│ │ └── \_home.scss 🏡 Styles unique to home page
+│ └── main.scss 🧠 The brain – @use entry point for everything
 ├── index.html 📄 Main HTML file
 ├── package.json 📦 Node dependencies + scripts
 ├── package-lock.json
@@ -104,7 +101,7 @@ npm run format      # Format code using Prettier
     "prefix:css": "postcss css/style.css --use autoprefixer -o css/style.css",
     "watch:sass": "sass sass/main.scss css/style.css --watch --style=expanded",
     "build:css": "npm-run-all compile:sass prefix:css",
-    "deploy": "gh-pages -d .",
+    "deploy": "gh-pages -d . --src '{index.html,css/*.css,css/fonts/**,img/**}'",
     "format": "prettier --write ."
   }
 }
@@ -116,7 +113,7 @@ npm run format      # Format code using Prettier
 
 - Organizing styles with 7-1 architecture and naming everything with BEM
 
-- Using Sass partials and the @import pattern (before learning @use)
+- Migrating from the legacy `@import` pattern to the modern `@use`/`@forward` module system
 
 - Writing reusable, DRY SCSS using functions, mixins, and variables
 
